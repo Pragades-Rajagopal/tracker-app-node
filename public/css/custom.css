@@ -1,0 +1,15 @@
+.container {
+    max-width: 1100px !important;
+}
+
+.container-shrink {
+    max-width: 900px !important;
+}
+
+.container-shrink-small {
+    max-width: 700px !important;
+}
+
+.table-no-border {
+    border-color: #fff !important;
+}
