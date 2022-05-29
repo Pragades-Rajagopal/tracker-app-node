@@ -1,0 +1,29 @@
+<%- include('header') %>
+
+<div class="container container-shrink">
+    <h4>Closed Tasks</h4>
+    <br>
+    <% result.forEach((result)=>{%>
+        <div class="card">
+            <div class="card-header" style="border-bottom: none;">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="index-priority-label"><%= result.PRIORITY %></label>
+                        </td>                       
+                        <td style="padding-left: 10px">
+                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                        </td>              
+                    </tr>                
+                </table>
+            </div>
+            <div class="card-body">
+              <label class="index-assigned-label">closed by: <b><%= result.ASSIGNED_TO %></b></label>
+              <label class="index-created-label card-text"><%= result.COMMENTS %></label>
+            </div>
+          </div>
+          <br>
+    <%})%>
+</div>
+
+<%- include('footer') %>

@@ -13,3 +13,67 @@
 .table-no-border {
     border-color: #fff !important;
 }
+
+.card-header, .card-body {
+    background-color: hsl(34, 78%, 91%, 10%) !important;
+}
+
+.card-header-color {
+    background-color: hsl(34, 78%, 91%, 40%) !important;
+    border-bottom: none !important;
+}
+
+.index-priority-label {
+    background-color: hsl(39, 100%, 50%, 30%);
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 4px;
+    border-color: hsl(39, 100%, 50%, 60%);
+    border-width: 0.5px;
+    border-style: solid;
+    font-size: 14px;
+}
+
+.index-created-label {
+    background-color: hsl(120, 73%, 75%, 50%);
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 8px;
+    /* border-color: hsl(120, 73%, 75%);
+    border-width: 0.5px;
+    border-style: solid; */
+    font-size: 14px;
+}
+
+.index-card-title {
+    /* padding-left: 10px; */
+    text-decoration: none;
+    font-size: 16px;
+    color: red;
+}
+
+.index-assigned-label {
+    background-color: hsl(0, 0%, 83%, 30%);
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.index-descr-label {
+    font-size: 14px;
+}
+
+.index-tags-label {
+    background-color: hsl(195, 53%, 79%, 40%);
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.choose{
+    width: 250px !important;
+    /* height: 20px !important; */
+    margin: 0px 0px 5px 0px !important;
+}

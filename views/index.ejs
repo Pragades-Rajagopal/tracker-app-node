@@ -1,20 +1,26 @@
 <%- include('header') %>
 
-<h3 style="text-align: center;">Welcome to the application</h3>
+<h3 style="text-align: center;">Homepage</h3>
 
 <div class="container container-shrink-small">
     
-    <form action="/tracker-app" method="post">
+    <form action="/prov_ops-tracker-app" method="post">
         <div class="mb-3">
+            <% if (errors._TITLE) { %>
+                <label for="inputTitle" class="text-danger"><%= errors._TITLE.msg %></label>
+            <% } %>
             <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputTitle"
                 placeholder="Enter the Title *" name="_TITLE">
     
             <textarea autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputDescr"
-                placeholder="Enter the Description *" name="_DESCRIPTION"></textarea>
+                placeholder="Enter the Description" name="_DESCRIPTION"></textarea>
     
             <table class="table table-no-border">
                 <tr>
                     <td>
+                        <% if (errors._ASSIGN_TO) { %>
+                            <label for="inputUser" class="text-danger"><%= errors._ASSIGN_TO.msg %></label>
+                        <% } %>
                         <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputUser"
                             placeholder="Enter the User *" name="_ASSIGN_TO" list="user">
                         <datalist id="user">
@@ -25,6 +31,9 @@
                         </datalist>
                     </td>
                     <td>
+                        <% if (errors._PRIORITY) { %>
+                            <label for="inputPriority" class="text-danger"><%= errors._PRIORITY.msg %></label>
+                        <% } %>
                         <select autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputPriority"
                             placeholder="Enter the ticket category *" name="_PRIORITY">
                             <option value="-" disabled selected>--Select Priority--</option>
@@ -35,8 +44,18 @@
                         </select>
                     </td>
                     <td>
-                        <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputTag"
-                            placeholder="Enter a Tag" name="_TAG">
+                        <% if (errors._PRIORITY | errors._ASSIGN_TO) { %>
+                            <label for="inputTags" class="text-danger"></label>
+                        <% } %>                               
+                            <input type="text" class="form-control shadow-none mb-3 phText" list="tags" id="inputTags" placeholder="Enter tags" multiple="multiple" name="_TAG"/>
+                            <datalist id="tags">
+                                <option value="Code bug">Code bug</option>
+                                <option value="Server activity">Server activity</option>
+                                <option value="Warranty issue">Warranty issue</option>
+                                <option value="Report generation">Report generation</option>
+                                <option value="Code configuration">Code configuration</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
+                            </datalist>                
                     </td>
                 </tr>
             </table>
@@ -49,26 +68,79 @@
 <div class="container container-shrink">
     <HR>
     <% result.forEach((result)=>{%>
-
         <div class="card">
-            <h5 class="card-header"><%= result.TITLE %></h5>
+            <div class="card-header card-header-color">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="index-priority-label"><%= result.PRIORITY %></label>
+                        </td>                       
+                        <td style="padding-left: 10px">
+                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                        </td>              
+                    </tr>                
+                </table>
+            </div>
             <div class="card-body">
-              <h5 class="card-title"><%= result.DESCRIPTION %></h5>
-              <p><label class="card-text">Assigned To : </label><%= result.ASSIGNED_TO %></p>
-              <p><label class="card-text">Status : </label><%= result.STATUS %></p>
-              <p><label class="card-text">Priority : </label><%= result.PRIORITY %></p>
-              <p><label class="card-text">Created On : </label><%= result.CREATED_ON %></p>
-              <p><label class="card-text">Tags : </label><%= result.TAGS %></p>
-              <br>
-              <a href="#" class="btn btn-primary">VIEW</a>
+                <% if (result.DESCRIPTION) { %>
+                    <p class="index-descr-label"><%= result.DESCRIPTION %></p>
+                    <% } %>
+              <label class="index-assigned-label">assigned to: <b><%= result.ASSIGNED_TO %></b></label>
+              <label class="index-assigned-label"><b><%= result.STATUS %></b></label>
+              <% if (result.TAGS) { %>
+                <label class="index-tags-label">Tags: <%= result.TAGS %></label>
+                <% } %>
+              <label class="index-created-label card-text">created: <%= result.CREATED_ON %></label>
             </div>
           </div>
           <br>
-
     <%})%>
 </div>
     
-    
+ <script type="text/javascript">
+     $(document).ready(function(){
+                // $('.chosen').selectize({plugins : ['drag-drop']});
+                $(".chosen-deselect").chosen({allow_single_deselect:true});
+                $(".chosen").chosen({ max_selected_options: 9 });
+            });
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                    const separator = ',';
+                    for (const input of document.getElementsByTagName("input")) {
+                        if (!input.multiple) {
+                            continue;
+                        }
+                        if (input.list instanceof HTMLDataListElement) {
+                            const optionsValues = Array.from(input.list.options).map(opt => opt.value);
+                            let valueCount = input.value.split(separator).length;
+                            input.addEventListener("input", () => {
+                                const currentValueCount = input.value.split(separator).length;
+                                if (valueCount !== currentValueCount) {
+                                    const lsIndex = input.value.lastIndexOf(separator);
+                                    const str = lsIndex !== -1 ? input.value.substr(0, lsIndex) + separator : "";
+                                    filldatalist(input, optionsValues, str);
+                                    valueCount = currentValueCount;
+                                }
+                            });
+                        }
+                    }
+                    function filldatalist(input, optionValues, optionPrefix) {
+                        const list = input.list;
+                        if (list && optionValues.length > 0) {
+                            list.innerHTML = "";
+                            const usedOptions = optionPrefix.split(separator).map(value => value.trim());
+                            for (const optionsValue of optionValues) {
+                                if (usedOptions.indexOf(optionsValue) < 0) {
+                                    const option = document.createElement("option");
+                                    option.value = optionPrefix + optionsValue;
+                                    list.append(option);
+                                }
+                            }
+                        }
+                    }
+                });
+ </script>   
 
 
 <%- include('footer') %>

@@ -1,0 +1,96 @@
+<%- include('header') %>
+
+<div class="container container-shrink-small">
+    <h4>Task Detail</h4>
+    <br>
+    <form action="/prov_ops-tracker-app/task/<%= result.ID %>" method="post">
+        <% if (errors._TITLE) { %>
+            <label for="inputTitle" class="text-danger"><%= errors._TITLE.msg %></label>
+        <% } else { %>
+            <label for="inputTitle">Title</label>
+        <% } %>        
+        <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputTitle"
+                placeholder="Enter the Title *" value="<%= result.TITLE %>" name="_TITLE">
+        <label for="inputDescr">Task Description</label>
+                <textarea autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputDescr" name="_DESCRIPTION" style="height: 125px;"><%= result.DESCRIPTION %></textarea>
+        
+                <table class="table table-no-border">
+                    <tr>
+                        <td>
+                            <% if (errors._ASSIGN_TO) { %>
+                                <label for="inputUser" class="text-danger"><%= errors._ASSIGN_TO.msg %></label>
+                            <% } else { %>
+                                <label for="inputUser">Assigned To</label>
+                            <% } %> 
+                            
+                            <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputUser"
+                                placeholder="Enter the User *" name="_ASSIGN_TO" value="<%= result.ASSIGNED_TO %>" list="user">
+                            <datalist id="user">
+                                <% users.forEach((users)=>{%>
+                                    <option id=<%=users.NAME %>><%= users.NAME %>
+                                    </option>
+                                    <%})%>
+                            </datalist>
+                        </td>
+                        <td>
+                            <% if (errors._PRIORITY) { %>
+                                <label for="inputPriority" class="text-danger"><%= errors._PRIORITY.msg %></label>
+                            <% } else { %>
+                                <label for="inputPriority">Priority</label>
+                            <% } %> 
+                            
+                            <select autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputPriority"
+                                placeholder="Enter the ticket category *" name="_PRIORITY">
+                                <option value="<%= result.PRIORITY %>" selected><%= result.D_PRIORITY %></option>
+                                <option value="-" disabled>---------</option>
+                                <option value="1">Critical</option>
+                                <option value="2">High</option>
+                                <option value="3">Medium</option>
+                                <option value="4">Low</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <% if (errors._STATUS) { %>
+                                <label for="inputStatus" class="text-danger"><%= errors._STATUS.msg %></label>
+                            <% } else { %>
+                                <label for="inputStatus">Status</label>
+                            <% } %>
+                            
+                            <select autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputStatus"
+                                 name="_STATUS">
+                                <option value="<%= result.STATUS %>" selected><%= result.STATUS %></option>
+                                <option value="-" disabled>---------</option>
+                                <option value="Started">Started</option>
+                                <option value="Work in Progress">Work in Progress</option>
+                                <option value="Pending with Other Groups">Pending with Other Groups</option>
+                                <option value="Pending with User">Pending with User</option>
+                                <option value="On-Hold">On-Hold</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </td>
+                        <td>
+                            <label for="inputCreated">Task Created on (IST)</label>
+                            <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputCreated" value="<%= result.CREATED_ON %>" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="inputTags">Tags</label>
+                            <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputTags"
+                placeholder="No tags added" value="<%= result.TAGS %>" name="_TAG">
+                        </td>
+                        <td>
+                            <label for="inputModified">Task Modified on (IST)</label>
+                            <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputModified" value="<%= result.MODIFIED_ON %>" disabled>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-danger" type="submit">Update</button>
+                <a href="/prov_ops-tracker-app/" class="btn btn-outline-dark">Home</a>
+    </form>
+
+</div>
+
+<%- include('footer') %>
