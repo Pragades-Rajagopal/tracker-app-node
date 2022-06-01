@@ -1,27 +1,54 @@
 <%- include('header') %>
 
 <div class="container container-shrink">
-    <h4>Closed Tasks</h4>
-    <br>
+        <% count.forEach((count) => { %>
+          <table class="table_c">
+              <tr class="tr_c">
+                <th class="th_c">YET TO START</th>
+                <th class="th_c">STARTED</th>
+                <th class="th_c">WORK IN PROGRESS</th>
+                <th class="th_c">PENDING WITH OTHER GROUPS</th>
+                <th class="th_c">PENDING WITH USER</th>
+                <th class="th_c">ON-HOLD</th>
+                <th class="th_c">CLOSED</th>
+              </tr>
+              <tr>
+                <td class="td_c"><%= count.YET_TO_START %></td>
+                <td class="td_c"><%= count.STARTED %></td>
+                <td class="td_c"><%= count.WORK_IN_PROGRESS %></td>
+                <td class="td_c"><%= count.PENDING_WITH_OTHER_GROUPS %></td>
+                <td class="td_c"><%= count.PENDING_WITH_USER %></td>
+                <td class="td_c"><%= count.ON_HOLD %></td>
+                <td class="td_c"><%= count.CLOSED %></td>
+              </tr>
+          </table>  
+        <% })%>
+        <br>
+      <a href="/prov_ops-tracker-app/tasks/closed/hide" class="btn btn-outline-dark btn-sm">Show hidden tasks</a>
+      <HR>
+    <h4>closed tasks</h4>
     <% result.forEach((result)=>{%>
-        <div class="card">
-            <div class="card-header" style="border-bottom: none;">
-                <table>
-                    <tr>
-                        <td>
-                            <label class="index-priority-label"><%= result.PRIORITY %></label>
-                        </td>                       
-                        <td style="padding-left: 10px">
-                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
-                        </td>              
-                    </tr>                
-                </table>
-            </div>
-            <div class="card-body">
-              <label class="index-assigned-label">closed by: <b><%= result.ASSIGNED_TO %></b></label>
-              <label class="index-created-label card-text"><%= result.COMMENTS %></label>
-            </div>
-          </div>
+        <form action="/prov_ops-tracker-app/task/<%= result.ID %>/hide" method="post">
+            <div class="card">
+                <div class="card-header card-header-closed" style="border-bottom: none;">
+                    <table>
+                        <tr>
+                            <td>
+                                <label class="index-priority-label"><%= result.PRIORITY %></label>
+                            </td>                       
+                            <td style="padding-left: 10px">
+                                <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                            </td>              
+                        </tr>                
+                    </table>
+                </div>
+                <div class="card-body card-body-closed">
+                    <button class="btn btn-danger danger-bt">Hide</button>
+                  <label class="index-assigned-label">closed by: <b><%= result.ASSIGNED_TO %></b></label>
+                  <label class="index-created-label card-text"><%= result.COMMENTS %></label>
+                </div>
+              </div>
+        </form>
           <br>
     <%})%>
 </div>

@@ -1,4 +1,57 @@
 <%- include('header') %>
 
+<div class="container container-shrink-settings">
+    <h3 style="text-align: center;">settings page</h3>
+    <% if (actionmsg) { %>
+        <label id="action-msg-label" class="msglabel">
+            <%= actionmsg %>
+            <button class="msg-label-btn" onclick="toggle(this)"><b>x</b></button>
+        </label>
+    <% } %>
+    
+    <form action="/prov_ops-tracker-app/settings/add-user" method="post">
+        <table class="table table-no-border">
+            <h5>Add user</h5>
+            <tr>
+                <td>
+                    <% if (errors.ADDUSER) { %>
+                        <label for="inputUser" class="text-danger"><%= errors.ADDUSER.msg %></label>
+                    <% } %>
+                    <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputUser"
+                        placeholder="Enter the User *" name="ADDUSER">                   
+                </td>
+                <td>
+                    <button class="btn btn-primary">Add User</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form action="/prov_ops-tracker-app/settings/add-tag" method="post">
+        <table class="table table-no-border">
+            <h5>Add Tag</h5>
+            <tr>
+                <td>
+                    <% if (errors.ADDTAG) { %>
+                        <label for="inputTag" class="text-danger"><%= errors.ADDTAG.msg %></label>
+                    <% } %>
+                    <input autofocus type="text" class="form-control shadow-none mb-3 phText" id="inputTag"
+                        placeholder="Enter the Tag *" name="ADDTAG">                   
+                </td>
+                <td>
+                    <button class="btn btn-primary">Add Tag</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+<script>
+    let toggle = () => {
+        let label = document.getElementById("action-msg-label");
+        label.setAttribute("hidden", "hidden");
+    }
+</script>
 
 <%- include('footer') %>

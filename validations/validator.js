@@ -27,3 +27,16 @@ exports.checkUpdate = [
     .withMessage("Status is mandatory")
 ];
 
+exports.checkAddUser = [
+    check('ADDUSER')
+    .isLength({min:1})
+    .withMessage('User name is mandatory')
+];
+
+exports.checkAddTag = [
+    check('ADDTAG')
+    .isLength({min:1})
+    .withMessage('Tag is mandatory')
+];
+
+

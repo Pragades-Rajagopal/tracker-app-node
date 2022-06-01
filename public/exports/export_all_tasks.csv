@@ -1,0 +1,15 @@
+ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,TAGS,CREATED_ON,MODIFIED_ON,PRIORITY,COMMENTS,IS_HIDE
+17,Export feature woking,,Bharat M,Yet to start,"Connectivity issue,Server activity",01-06-2022 22:42:22,,2,,N
+16,Testing hidden task and unhide action,working perfectly,Saibhargavi P,Pending with Other Groups,Report generation,01-06-2022 20:49:37,01-06-2022 21:20:31,3,,N
+15,test,,Keerthi P,Started,,31-05-2022 14:50:18,01-06-2022 20:54:05,2,,N
+14,Testing multi tag with different methodology,,Pragadeswar R,Pending with Other Groups,"Code bug,Miscellaneous,Server activity",29-05-2022 23:29:09,01-06-2022 22:52:28,1,,N
+12,Update with validation part,Validation part is added in update section and it's working,Pragadeswar R,Started,,29-05-2022 15:13:55,31-05-2022 22:28:58,2,,N
+11,Testing multi tag with CDNs,trim is fixed now in the latest build,Pragadeswar R,Closed,"Code bug,Server activity,Warranty issue",29-05-2022 15:03:18,01-06-2022 21:04:38,4,Closed on 01-06-2022 21:04:38 IST,Y
+5,Testing multi tag,,Sucharitha S,Pending with User,"Server activity,Warranty issue",29-05-2022 13:16:59,01-06-2022 22:47:48,4,,N
+4,Checking if priority sort works,,Bharat M,Closed,,26-05-2022 00:52:01,01-06-2022 21:02:41,3,Closed on 01-06-2022 21:02:41 IST,N
+3,Testing if insert action is working ,NA,Pragadeswar R,Work in Progress,,26-05-2022 00:48:23,01-06-2022 22:47:33,1,,N
+2,Issue 2,Initial test working!,Pragadeswar R,Closed,Code bug,25-05-2022 23:21:00,01-06-2022 21:20:18,3,Closed on 01-06-2022 21:20:18 IST,Y
+1,Use the Array map() method to create a new array consisting of elements from the old array that have been modified via a callback function passed to the method,"Like the forEach() method in Recipe 2.5, the map() method applies a callback function
+to each array element. Unlike forEach(), though, the map() method results in a new
+array rather than modifying the original array. You don’t return a value when using
+forEach(), but you must return a value when using map()",Keerthi P,Closed,Code bug,25-05-2022 22:04:48,31-05-2022 23:11:44,1,Closed on 31-05-2022 23:11:44 IST,Y

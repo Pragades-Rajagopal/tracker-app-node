@@ -1,8 +1,7 @@
 <%- include('header') %>
 
 <div class="container container-shrink-small">
-    <h4>Task Detail</h4>
-    <br>
+    <h4>task detail</h4>
     <form action="/prov_ops-tracker-app/task/<%= result.ID %>" method="post">
         <% if (errors._TITLE) { %>
             <label for="inputTitle" class="text-danger"><%= errors._TITLE.msg %></label>
@@ -87,10 +86,16 @@
                         </td>
                     </tr>
                 </table>
-                <button class="btn btn-danger" type="submit">Update</button>
-                <a href="/prov_ops-tracker-app/" class="btn btn-outline-dark">Home</a>
+                <% if(result.IS_HIDE !== 'Y') { %>
+                    <button class="btn btn-danger" type="submit">Update</button>
+                    <% } %>            
     </form>
-
+    <% if(result.IS_HIDE === 'Y') { %>
+        <p style="color: red;">Task is hidden. First unhide and update!</p>
+        <% } %>
+        <br>
+        <button class="btn btn-outline-dark cancel" onclick="history.back()">Back</button>
+        <a href="/prov_ops-tracker-app/" class="btn btn-outline-dark">Home</a>
 </div>
 
 <%- include('footer') %>

@@ -1,4 +1,7 @@
 const moment = require('moment');
+const path = require('path');
+const fs = require('fs');
+const fastcsv = require('fast-csv');
 const model = require('../models/model');
 const { validationResult } = require('express-validator');
 
@@ -6,7 +9,9 @@ const { validationResult } = require('express-validator');
 const getIndex = (req, res) => {
     model.getAllData((result) => {
         model.getUsers((users) => {
-            res.render('index', {result: result, users: users, errors: {}});
+            model.getTags((tags) => {
+                res.render('index', {result: result, users: users, tags:tags, errors: {}});
+            });
         });
     });  
 };
@@ -17,7 +22,9 @@ const postTask = (req, res) => {
     if (!errors.isEmpty()) {
         model.getAllData((result) => {
             model.getUsers((users) => {
-                res.render('index', {result: result, users: users, errors: errors.mapped()});
+                model.getTags((tags) => {
+                    res.render('index', {result: result, users: users, tags: tags, errors: errors.mapped()});
+                });
             });
         });
         return;
@@ -42,7 +49,9 @@ const postTask = (req, res) => {
         
         model.getAllData((result) => {
             model.getUsers((users) => {
-                res.render('index', {result: result, users: users, errors: {}});
+                model.getTags((tags) => {
+                    res.render('index', {result: result, users: users, tags:tags, errors: {}});
+                });
             });
         });
     });
@@ -102,13 +111,133 @@ const updateTask = (req, res) => {
 
 const getClosedTasks = (req, res) => {
     model.getClosedTasks((result) => {
-        res.render('closed-task-page', {result: result});
+        model.getTaskCount((count) => {
+            res.render('closed-task-page', {result: result, count: count});           
+        });
     })
 };
 
-const getSettingsPage = (req, res) => {
-    res.render('settings');
+const getHideTask = (req, res) => {
+    model.getHiddenTasks((result) => {
+        res.render('hidden-task-page', {result: result});
+    });
 };
+
+const hideTask = (req, res) => {
+    const id = req.params.ID;
+
+    model.updateIs_Hide(id, 'hide', (result_) => {
+        model.getClosedTasks((result) => {
+            model.getTaskCount((count) => {
+                res.render('closed-task-page', {result: result, count: count});           
+            });
+        })
+    });
+};
+
+const unHideTask = (req, res) => {
+    const id = req.params.ID;
+
+    model.updateIs_Hide(id, 'unhide', (result_) => {
+        model.getHiddenTasks((result) => {
+            res.render('hidden-task-page', {result: result});
+        });
+    });
+};
+
+const getSettingsPage = (req, res) => {
+    res.render('settings', {errors: {}, actionmsg: null});
+};
+
+const postUser = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.render('settings', {errors: errors.mapped(), actionmsg: null});
+        return;
+    }
+
+    var user_nm = req.body.ADDUSER;
+    user_nm = user_nm.trim();
+
+    model.addUser(user_nm, (result) => {
+        if (result === 'error') {
+            res.render('settings', {errors: {}, actionmsg: 'User is already available in the system'});           
+            return; 
+        }
+        res.render('settings', {errors: {}, actionmsg: 'User added in the system'});   
+    });
+};
+
+const postTag = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.render('settings', {errors: errors.mapped(), actionmsg: null});
+        return;
+    }
+
+    var tag_nm = req.body.ADDTAG;
+    tag_nm = tag_nm.trim();
+
+    model.addTag(tag_nm, (result) => {
+        if (result === 'error') {
+            res.render('settings', {errors: {}, actionmsg: 'Tag is already available in the system'});           
+            return; 
+        }
+        res.render('settings', {errors: {}, actionmsg: 'Tag added in the system'}); 
+    });
+};
+
+const getExportPage = (req, res) => {
+    res.render('export-page', {filename: null});
+};
+
+const exportOpenTasks = (req, res) => {
+    model.exportModel('open', (result) => {
+        const filePath = path.resolve(__dirname, '../', 'public', 'exports');
+        const filename = 'export_open_tasks.csv';
+        const endPath = filePath + '\\' + filename;
+        
+        var ws = fs.createWriteStream(endPath);
+        fastcsv.write(
+            result,
+            {headers: true}   
+        ).on("finish", () => {
+            res.render('export-page', {filename: filename});
+        }).pipe(ws);
+    });
+}
+
+const exportClosedTasks = (req, res) => {
+    model.exportModel('closed', (result) => {
+        const filePath = path.resolve(__dirname, '../', 'public', 'exports');
+        const filename = 'export_closed_tasks.csv';
+        const endPath = filePath + '\\' + filename;
+        
+        var ws = fs.createWriteStream(endPath);
+        fastcsv.write(
+            result,
+            {headers: true}   
+        ).on("finish", () => {
+            res.render('export-page', {filename: filename});
+        }).pipe(ws);
+    });
+}
+
+const exportAllTasks = (req, res) => {
+    model.exportModel('all', (result) => {
+        const filePath = path.resolve(__dirname, '../', 'public', 'exports');
+        const filename = 'export_all_tasks.csv';
+        const endPath = filePath + '\\' + filename;
+        
+        var ws = fs.createWriteStream(endPath);
+        fastcsv.write(
+            result,
+            {headers: true}   
+        ).on("finish", () => {
+            res.render('export-page', {filename: filename});
+        }).pipe(ws);
+    });
+}
 
 
 module.exports = {
@@ -117,5 +246,14 @@ module.exports = {
     viewTask,
     updateTask,
     getClosedTasks,
-    getSettingsPage
+    getSettingsPage,
+    postUser,
+    postTag,
+    hideTask,
+    unHideTask,
+    getHideTask,
+    getExportPage,
+    exportOpenTasks,
+    exportClosedTasks,
+    exportAllTasks
 }

@@ -1,0 +1,19 @@
+<%- include('header') %>
+
+<div class="container container-shrink-small">
+<h4>export page</h4>
+<br>
+<p><a href="/prov_ops-tracker-app/exports/open-task" class="export-link">EXPORT OPEN TASKS</a></p>
+<p><a href="/prov_ops-tracker-app/exports/closed-task" class="export-link">EXPORT CLOSED TASKS</a></p>
+<p><a href="/prov_ops-tracker-app/exports/all" class="export-link">EXPORT ALL</a></p>
+</div>
+
+<% if(filename) { %>
+    <a href='/public/exports/<%= filename %>' download='<%= filename %>' id='download-link'></a>
+<% } %>
+
+<script>
+    document.getElementById('download-link').click();
+</script>
+
+<%- include('footer') %>
