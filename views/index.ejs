@@ -14,7 +14,7 @@
             <textarea autofocus type="text" class="form-control shadow-none phText" id="inputDescr"
                 placeholder="Enter the Description" name="_DESCRIPTION"></textarea>
     
-            <table class="table table-no-border">
+            <table class="table table-no-border" style="margin-bottom: 0px;">
                 <tr>
                     <td>
                         <% if (errors._ASSIGN_TO) { %>
@@ -62,9 +62,11 @@
 </div>
 
 <div class="container container-shrink">
-    <HR>
+    <!-- <HR style="margin: 6px 0 0 0;">Task details</HR> -->
+    <h4 style="margin: 6px 0 0 0;">open tasks</h4>
+    <input autofocus type="text" class="form-control shadow-none phText searchbox-input" id="searchbox-input" placeholder="Search to filter..." name="_SEARCH"/>
     <% result.forEach((result)=>{%>
-        <div class="card">
+        <div class="card" style="margin-bottom: 2px;">
             <div class="card-header card-header-color">
                 <table>
                     <tr>
@@ -72,7 +74,7 @@
                             <label class="index-priority-label"><%= result.PRIORITY %></label>
                         </td>                       
                         <td style="padding-left: 10px">
-                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>" target="_blank" rel="noreferrer noopener"><%= result.TITLE %></a>
                         </td>              
                     </tr>                
                 </table>
@@ -89,53 +91,56 @@
               <label class="index-created-label card-text">created: <%= result.CREATED_ON %></label>
             </div>
           </div>
-          <br>
+          
     <%})%>
 </div>
     
  <script type="text/javascript">
-     $(document).ready(function(){
-                // $('.chosen').selectize({plugins : ['drag-drop']});
-                $(".chosen-deselect").chosen({allow_single_deselect:true});
-                $(".chosen").chosen({ max_selected_options: 9 });
-            });
 
-
-            document.addEventListener("DOMContentLoaded", function () {
-                    const separator = ',';
-                    for (const input of document.getElementsByTagName("input")) {
-                        if (!input.multiple) {
-                            continue;
+    document.addEventListener("DOMContentLoaded", function () {
+            const separator = ',';
+            for (const input of document.getElementsByTagName("input")) {
+                if (!input.multiple) {
+                    continue;
+                }
+                if (input.list instanceof HTMLDataListElement) {
+                    const optionsValues = Array.from(input.list.options).map(opt => opt.value);
+                    let valueCount = input.value.split(separator).length;
+                    input.addEventListener("input", () => {
+                        const currentValueCount = input.value.split(separator).length;
+                        if (valueCount !== currentValueCount) {
+                            const lsIndex = input.value.lastIndexOf(separator);
+                            const str = lsIndex !== -1 ? input.value.substr(0, lsIndex) + separator : "";
+                            filldatalist(input, optionsValues, str);
+                            valueCount = currentValueCount;
                         }
-                        if (input.list instanceof HTMLDataListElement) {
-                            const optionsValues = Array.from(input.list.options).map(opt => opt.value);
-                            let valueCount = input.value.split(separator).length;
-                            input.addEventListener("input", () => {
-                                const currentValueCount = input.value.split(separator).length;
-                                if (valueCount !== currentValueCount) {
-                                    const lsIndex = input.value.lastIndexOf(separator);
-                                    const str = lsIndex !== -1 ? input.value.substr(0, lsIndex) + separator : "";
-                                    filldatalist(input, optionsValues, str);
-                                    valueCount = currentValueCount;
-                                }
-                            });
+                    });
+                }
+            }
+            function filldatalist(input, optionValues, optionPrefix) {
+                const list = input.list;
+                if (list && optionValues.length > 0) {
+                    list.innerHTML = "";
+                    const usedOptions = optionPrefix.split(separator).map(value => value.trim());
+                    for (const optionsValue of optionValues) {
+                        if (usedOptions.indexOf(optionsValue) < 0) {
+                            const option = document.createElement("option");
+                            option.value = optionPrefix + optionsValue;
+                            list.append(option);
                         }
                     }
-                    function filldatalist(input, optionValues, optionPrefix) {
-                        const list = input.list;
-                        if (list && optionValues.length > 0) {
-                            list.innerHTML = "";
-                            const usedOptions = optionPrefix.split(separator).map(value => value.trim());
-                            for (const optionsValue of optionValues) {
-                                if (usedOptions.indexOf(optionsValue) < 0) {
-                                    const option = document.createElement("option");
-                                    option.value = optionPrefix + optionsValue;
-                                    list.append(option);
-                                }
-                            }
-                        }
-                    }
+                }
+            }
+        });
+
+    $(document).ready(function () {
+            $('.searchbox-input').on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".card").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+            });
+        });
  </script>   
 
 

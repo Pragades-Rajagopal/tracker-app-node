@@ -1,5 +1,5 @@
 body {
-    background-color: antiquewhite;
+    background-color: hsl(34, 78%, 91%);
 }
 
 .container {
@@ -16,6 +16,10 @@ body {
 
 .container-shrink-settings {
     max-width: 500px !important;
+}
+
+.card {
+    border-radius: 10px;
 }
 
 .table-no-border {
@@ -127,7 +131,7 @@ body {
 
 .td_c, .th_c {
     text-align: center;
-    border-color: #96D4D4;
+    border-color: hsl(0, 0%, 50%, 50%);
 }
 
 .danger-bt, .unhide-bt {
@@ -154,4 +158,12 @@ body {
 
 .export-link:hover {
     color: red;
+}
+
+.searchbox-input {
+    width: 250px; 
+    margin-bottom: 6px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-top: 5px;
 }
