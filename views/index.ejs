@@ -63,18 +63,21 @@
 
 <div class="container container-shrink">
     <!-- <HR style="margin: 6px 0 0 0;">Task details</HR> -->
-    <h4 style="margin: 6px 0 0 0;">open tasks</h4>
+    <h4 style="margin: 6px 0 0 0; text-align: center;">open tasks</h4>
     <input autofocus type="text" class="form-control shadow-none phText searchbox-input" id="searchbox-input" placeholder="Search to filter..." name="_SEARCH"/>
     <% result.forEach((result)=>{%>
         <div class="card" style="margin-bottom: 2px;">
             <div class="card-header card-header-color">
                 <table>
                     <tr>
+                        <td style="padding-right: 2px;">
+                            <label>#<%= result.ID %></label>
+                        </td>
                         <td>
                             <label class="index-priority-label"><%= result.PRIORITY %></label>
                         </td>                       
                         <td style="padding-left: 10px">
-                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>" target="_blank" rel="noreferrer noopener"><%= result.TITLE %></a>
+                            <a class="index-card-title" href="/prov_ops-tracker-app/issue/<%= result.ID %>" target="_blank" rel="noreferrer noopener"><%= result.TITLE %></a>
                         </td>              
                     </tr>                
                 </table>

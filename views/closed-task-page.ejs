@@ -24,20 +24,22 @@
           </table>  
         <% })%>
         <br>
-      <a href="/prov_ops-tracker-app/tasks/closed/hide" class="btn btn-outline-dark btn-sm">Show hidden tasks</a>
-      <!-- <HR style="margin: 6px 0 0 0;"> -->
-    <h4 style="margin-top: 8px;">closed tasks</h4>
+      <a href="/prov_ops-tracker-app/issues/closed/hide" class="btn btn-outline-dark btn-sm">Show hidden tasks</a>
+    <h4 style="margin-top: 8px; text-align: center;">closed tasks</h4>
     <% result.forEach((result)=>{%>
-        <form action="/prov_ops-tracker-app/task/<%= result.ID %>/hide" method="post">
+        <form action="/prov_ops-tracker-app/issue/<%= result.ID %>/hide" method="post">
             <div class="card" style="margin-bottom: 2px;">
                 <div class="card-header card-header-closed" style="border-bottom: none;">
                     <table>
                         <tr>
                             <td>
                                 <label class="index-priority-label"><%= result.PRIORITY %></label>
-                            </td>                       
-                            <td style="padding-left: 10px">
-                                <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                            </td>   
+                            <td style="padding-left: 4px;">
+                              <label>#<%= result.ID %></label>
+                            </td>                    
+                            <td style="padding-left: 4px">
+                                <a class="index-card-title" href="/prov_ops-tracker-app/issue/<%= result.ID %>"><%= result.TITLE %></a>
                             </td>              
                         </tr>                
                     </table>

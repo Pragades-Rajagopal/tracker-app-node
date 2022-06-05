@@ -2,7 +2,7 @@
 
 <div class="container container-shrink-small">
     <h4>task detail</h4>
-    <form action="/prov_ops-tracker-app/task/<%= result.ID %>" method="post">
+    <form action="/prov_ops-tracker-app/issue/<%= result.ID %>" method="post">
         <% if (errors._TITLE) { %>
             <label for="inputTitle" class="text-danger"><%= errors._TITLE.msg %></label>
         <% } else { %>

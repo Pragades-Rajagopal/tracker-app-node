@@ -156,21 +156,21 @@ const getTaskCount = (callback) => {
 
 const exportModel = (action, callback) => {
     if (action === 'open') {
-        const sql = "SELECT * FROM TRACKER_DATA WHERE STATUS <> 'Closed' ORDER BY ID DESC";
+        const sql = "SELECT ID AS ISSUE_ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,CASE PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIORITY,TAGS,CREATED_ON,MODIFIED_ON,COMMENTS,IS_HIDE FROM TRACKER_DATA WHERE STATUS <> 'Closed' ORDER BY ID DESC";
         db.appDB.all(sql, [], (err, rows) => {
             callback(rows);
         });
         return;
     }
     else if (action === 'closed') {
-        const sql = "SELECT * FROM TRACKER_DATA WHERE STATUS = 'Closed' ORDER BY ID DESC";
+        const sql = "SELECT ID AS ISSUE_ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,CASE PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIORITY,TAGS,CREATED_ON,MODIFIED_ON,COMMENTS,IS_HIDE FROM TRACKER_DATA WHERE STATUS = 'Closed' ORDER BY ID DESC";
         db.appDB.all(sql, [], (err, rows) => {
             callback(rows);
         });
         return;
     }
     else if (action === 'all') {
-        const sql = "SELECT * FROM TRACKER_DATA ORDER BY ID DESC";
+        const sql = "SELECT ID AS ISSUE_ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,CASE PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIORITY,TAGS,CREATED_ON,MODIFIED_ON,COMMENTS,IS_HIDE FROM TRACKER_DATA ORDER BY ID DESC";
         db.appDB.all(sql, [], (err, rows) => {
             callback(rows);
         });

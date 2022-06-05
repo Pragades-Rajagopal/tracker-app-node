@@ -194,7 +194,7 @@ const getExportPage = (req, res) => {
 const exportOpenTasks = (req, res) => {
     model.exportModel('open', (result) => {
         const filePath = path.resolve(__dirname, '../', 'public', 'exports');
-        const filename = 'export_open_tasks.csv';
+        const filename = 'export_open_issues.csv';
         const endPath = filePath + '\\' + filename;
         
         var ws = fs.createWriteStream(endPath);
@@ -210,7 +210,7 @@ const exportOpenTasks = (req, res) => {
 const exportClosedTasks = (req, res) => {
     model.exportModel('closed', (result) => {
         const filePath = path.resolve(__dirname, '../', 'public', 'exports');
-        const filename = 'export_closed_tasks.csv';
+        const filename = 'export_closed_issues.csv';
         const endPath = filePath + '\\' + filename;
         
         var ws = fs.createWriteStream(endPath);
@@ -226,7 +226,7 @@ const exportClosedTasks = (req, res) => {
 const exportAllTasks = (req, res) => {
     model.exportModel('all', (result) => {
         const filePath = path.resolve(__dirname, '../', 'public', 'exports');
-        const filename = 'export_all_tasks.csv';
+        const filename = 'export_all_issues.csv';
         const endPath = filePath + '\\' + filename;
         
         var ws = fs.createWriteStream(endPath);

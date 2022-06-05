@@ -1,18 +1,21 @@
 <%- include('header') %>
 
 <div class="container container-shrink">
-<h4>hidden tasks</h4>
+<h4 style="text-align: center;">hidden tasks</h4>
 <% result.forEach((result)=>{%>
-    <form action="/prov_ops-tracker-app/tasks/closed/unhide/<%= result.ID %>" method="post">
+    <form action="/prov_ops-tracker-app/issue/closed/unhide/<%= result.ID %>" method="post">
         <div class="card" style="margin-bottom: 4px;">
             <div class="card-header card-header-hidden" style="border-bottom: none;">
                 <table>
                     <tr>
-                        <td>
+                        <td style="padding-right: 6px;">
                             <button class="btn btn-danger unhide-bt">Unhide</button>
-                        </td>                       
+                        </td> 
+                        <td style="padding-right: 2px;">
+                            <label>#<%= result.ID %></label>
+                        </td>                      
                         <td style="padding-left: 10px">
-                            <a class="index-card-title" href="/prov_ops-tracker-app/task/<%= result.ID %>"><%= result.TITLE %></a>
+                            <a class="index-card-title" href="/prov_ops-tracker-app/issue/<%= result.ID %>"><%= result.TITLE %></a>
                         </td>              
                     </tr>                
                 </table>
@@ -20,7 +23,7 @@
         </div>
     </form>
 <%})%>
-<a href="/prov_ops-tracker-app/tasks/closed" class="btn btn-outline-dark btn-sm">Back</a>
+<a href="/prov_ops-tracker-app/issues/closed" class="btn btn-outline-dark btn-sm">Back</a>
 </div>
 
 <%- include('footer') %>

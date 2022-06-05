@@ -1,0 +1,16 @@
+ISSUE_ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,PRIORITY,TAGS,CREATED_ON,MODIFIED_ON,COMMENTS,IS_HIDE
+18,Final issue,Testing this issue,Pragadeswar R,Started,Low,"Report generation,Warranty issue,Code bug",05-06-2022 22:20:43,05-06-2022 22:20:57,,N
+17,Export feature woking,,Bharat M,Started,High,"Connectivity issue,Server activity",01-06-2022 22:42:22,04-06-2022 18:55:03,,N
+16,Testing hidden task and unhide action,working perfectly,Saibhargavi P,Closed,Medium,Report generation,01-06-2022 20:49:37,04-06-2022 20:33:52,Closed on 04-06-2022 20:33:52 IST,Y
+15,test,,Keerthi P,Work in Progress,High,,31-05-2022 14:50:18,04-06-2022 18:55:15,,N
+14,Testing multi tag with different methodology,,Pragadeswar R,Closed,Critical,"Code bug,Miscellaneous,Server activity",29-05-2022 23:29:09,02-06-2022 13:37:44,Closed on 02-06-2022 13:37:44 IST,Y
+12,Update with validation part,Validation part is added in update section and it's working,Harish R,Work in Progress,Medium,,29-05-2022 15:13:55,05-06-2022 22:25:20,,N
+11,Testing multi tag with CDNs,trim is fixed now in the latest build,Pragadeswar R,Closed,High,"Code bug,Server activity,Warranty issue",29-05-2022 15:03:18,05-06-2022 22:29:21,Closed on 05-06-2022 22:29:21 IST,N
+5,Testing multi tag,,Sucharitha S,Closed,Low,"Server activity,Warranty issue",29-05-2022 13:16:59,04-06-2022 20:35:03,Closed on 04-06-2022 20:35:03 IST,Y
+4,Checking if priority sort works,,Bharat M,On-Hold,Low,,26-05-2022 00:52:01,05-06-2022 22:03:17,,N
+3,Testing if insert action is working ,NA,Pragadeswar R,Closed,Critical,,26-05-2022 00:48:23,02-06-2022 13:37:36,Closed on 02-06-2022 13:37:36 IST,N
+2,"The Four Freedoms is a series of four 1943 oil paintings by the American artist Norman Rockwell (pictured). The paintings—Freedom of Speech, Freedom of Worship, Freedom from Want and Freedom from Fear—refer to Franklin D. Roosevelt's January 1941 Four Freedoms State of the Union address in which he identified essential human rights that should be universally protected, a theme which became part of the United Nations Charter. The paintings were reproduced in The Saturday Evening Post alongside essays by prominent thinkers of the day. They became the highlight of a year-long touring exhibition to promote war bonds sold to support the American war effort, which raised over $132 million. The paintings, now in the Norman Rockwell Museum, are his best-known works, but critical review has not been entirely positive. Freedom from Want became emblematic of what is now known as the ""Norman Rockwell Thanksgiving"", with family at table as a turkey is served.",Initial test working!,Pragadeswar R,Work in Progress,Critical,Code bug,25-05-2022 23:21:00,05-06-2022 21:41:47,,N
+1,Use the Array map() method to create a new array consisting of elements from the old array that have been modified via a callback function passed to the method,"Like the forEach() method in Recipe 2.5, the map() method applies a callback function
+to each array element. Unlike forEach(), though, the map() method results in a new
+array rather than modifying the original array. You don’t return a value when using
+forEach(), but you must return a value when using map()",Surandranath G,Closed,Medium,Code bug,25-05-2022 22:04:48,05-06-2022 22:24:47,Closed on 05-06-2022 22:24:47 IST,Y
