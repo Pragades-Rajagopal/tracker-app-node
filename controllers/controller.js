@@ -237,8 +237,147 @@ const exportAllTasks = (req, res) => {
             res.render('export-page', {filename: filename});
         }).pipe(ws);
     });
-}
+};
 
+const getL3page = (req, res) => {
+    model.getOpenL3issues((result) => {
+        res.render('l3-home', {'results': result});
+    });
+};
+
+const getAddL3page = (req, res) => {
+    model.getRaisedByUsers((users) => {
+        res.render('l3-create', {'users': users, errors: {}, actionmsg: null});
+    });
+};
+
+const addL3issue = (req, res) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        model.getRaisedByUsers((users) => {
+            res.render('l3-create', {'users': users, errors: errors.mapped(), actionmsg: null});
+        });
+        return;
+    }
+
+    const L3_name = req.body.L3_NAME;
+    const raised_by = req.body.RAISED_BY;
+    const prio = req.body.PRIORITY;
+    const open_dt = req.body.OPEN_DATE;
+    const itsm_no = req.body.ITSM_NO;
+    const jira_id = req.body.JIRA_ID;
+    const mail_sub = req.body.MAIL;
+    const comments = req.body.COMMENTS;
+    const owner = req.body.OWNER;
+    const status = req.body.STATUS;
+    const close_dt = req.body.CLOSED_ON;
+    const remark = req.body.REMARK;
+
+    const args = {
+        'L3_name': L3_name,
+        'raised_by': raised_by,
+        'prio': prio,
+        'open_dt': open_dt,
+        'itsm_no': itsm_no,
+        'jira_id': jira_id,
+        'mail_sub': mail_sub,
+        'comments': comments,
+        'owner': owner,
+        'status': status,
+        'close_dt': close_dt,
+        'remark': remark
+    };
+
+    model.insertL3issue(args, (result) => {
+        model.getRaisedByUsers((users) => {
+            res.render('l3-create', {'users': users, errors: {}, actionmsg: 'L3 issue added successfully'});
+        });
+    });
+};
+
+const getL3issue = (req, res) => {
+    const id = req.params.ID;
+
+    model.getL3byId(id, (result) => {
+        model.getRaisedByUsers((users) => {
+            res.render('l3-update', {result: result, users: users, errors: {}, actionmsg: null})
+        });
+    });
+};
+
+const putL3issue = (req, res) => {
+    const id = req.params.ID;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        model.getL3byId(id, (result) => {
+            model.getRaisedByUsers((users) => {
+                res.render('l3-update', {result: result, users: users, errors: errors.mapped(), actionmsg: null})
+            });
+        });
+        return;
+    }
+
+    const L3_name = req.body.L3_NAME;
+    const raised_by = req.body.RAISED_BY;
+    const prio = req.body.PRIORITY;
+    const open_dt = req.body.OPEN_DATE;
+    const itsm_no = req.body.ITSM_NO;
+    const jira_id = req.body.JIRA_ID;
+    const mail_sub = req.body.MAIL;
+    const comments = req.body.COMMENTS;
+    const owner = req.body.OWNER;
+    const status = req.body.STATUS;
+    const close_dt = req.body.CLOSED_ON;
+    const remark = req.body.REMARK;
+
+    const args = {
+        'L3_name': L3_name,
+        'raised_by': raised_by,
+        'prio': prio,
+        'open_dt': open_dt,
+        'itsm_no': itsm_no,
+        'jira_id': jira_id,
+        'mail_sub': mail_sub,
+        'comments': comments,
+        'owner': owner,
+        'status': status,
+        'close_dt': close_dt,
+        'remark': remark,
+        'id': id
+    };
+
+    model.updateL3byId(args, (result_) => {
+        model.getL3byId(id, (result) => {
+            model.getRaisedByUsers((users) => {
+                res.render('l3-update', {result: result, users: users, errors: errors.mapped(), actionmsg: 'Details updated successfully'})
+            });
+        });
+    });
+};
+
+const getClosedL3page = (req, res) => {
+    model.getClosedL3issues((result) => {
+        res.render('l3-closed', {'results': result});
+    });
+};
+
+const exportL3issues = (req, res) => {
+    model.exportModel('l3issues', (result) => {
+        const filePath = path.resolve(__dirname, '../', 'public', 'exports');
+        const filename = 'export_L3_issues.csv';
+        const endPath = filePath + '\\' + filename;
+        
+        var ws = fs.createWriteStream(endPath);
+        fastcsv.write(
+            result,
+            {headers: true}   
+        ).on("finish", () => {
+            res.render('export-page', {filename: filename});
+        }).pipe(ws);
+    });
+}
 
 module.exports = {
     getIndex,
@@ -255,5 +394,12 @@ module.exports = {
     getExportPage,
     exportOpenTasks,
     exportClosedTasks,
-    exportAllTasks
+    exportAllTasks,
+    getL3page,
+    getAddL3page,
+    addL3issue,
+    getL3issue,
+    putL3issue,
+    exportL3issues,
+    getClosedL3page
 }

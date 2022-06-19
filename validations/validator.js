@@ -39,4 +39,22 @@ exports.checkAddTag = [
     .withMessage('Tag is mandatory')
 ];
 
+exports.addL3 = [
+    check('L3_NAME')
+    .isLength({min:1})
+    .withMessage('L3 Issue title is mandatory'),
+    check('RAISED_BY')
+    .isLength({min:1})
+    .withMessage('User is mandatory'),
+    check('PRIORITY')
+    .isLength({min:1})
+    .withMessage('Priority is mandatory'),
+    check('OPEN_DATE')
+    .isLength({min:1})
+    .withMessage('Date is mandatory'),
+    check('STATUS')
+    .isLength({min:1})
+    .withMessage('Status is mandatory')
+];
+
 

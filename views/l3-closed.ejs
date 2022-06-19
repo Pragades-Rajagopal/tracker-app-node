@@ -1,0 +1,30 @@
+<%- include('header')%>
+
+<div class="container" style="max-width: 1350px !important;">
+    <h4 style="text-align: center;">closed L3 tracker (<%= results.length %> issues)</h4>   
+    <table class="table" style="border-color: hsla(0, 0%, 0%, 25%) !important;">
+        <thead>
+            <tr>
+                <th>L3 ISSUE</th>
+                <th>RAISED BY</th>
+                <th>PRIORITY</th>
+                <th>CREATED ON</th>
+                <th>STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (const result of results) { %> 
+            <tr>
+                <td><a class="l3-title" href="/prov_ops-tracker-app/L3_tracker/view/<%= result.ID %>" target="_blank" rel="noreferrer noopener"><%= result.ISSUE_NAME %></a></td>
+                <td><%= result.RAISED_BY %></td>
+                <td><%= result.PRIO %></td>
+                <td><%= result.CREATED_ON %></td>
+                <td><%= result.STATUS %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <a href="/prov_ops-tracker-app/L3_tracker" class="btn btn-outline-dark btn-sm">Back</a>
+</div>
+
+<%- include('footer')%>

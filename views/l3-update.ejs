@@ -1,0 +1,108 @@
+<%- include('header') %>
+
+<div class="container container-shrink">
+    <h4 style="text-align: center;">L3 issue detail</h4>
+    <br>
+    <% if (actionmsg) { %>
+        <label id="action-msg-label" class="msglabel" style="margin-bottom: 10px;">
+            <%= actionmsg %>
+            <button class="msg-label-btn" onclick="toggle(this)"><b>x</b></button>
+        </label>
+    <% } %>
+    <form action="/prov_ops-tracker-app/L3_tracker/view/<%= result.ID %>/update-details" method="post">
+        <% if (errors.L3_NAME) { %>
+            <label for="inputL3" class="text-danger"><%= errors.L3_NAME.msg %></label>
+        <% } else { %>
+            <label for="inputL3">L3 issue</label>
+        <% } %>
+        <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputL3" placeholder="Enter L3 Issue *" value="<%= result.ISSUE_NAME %>" name="L3_NAME">
+
+        <table class="table table-no-border" style="margin-bottom: 0px;">
+            <tr>
+                <td>
+                    <% if (errors.RAISED_BY) { %>
+                        <label for="inputRaisedBy" class="text-danger"><%= errors.RAISED_BY.msg %></label>
+                        <% } else { %>
+                            <label for="inputRaisedBy">Raised by</label>
+                        <% } %>
+                    <input autofocus type="text" class="form-control shadow-none phText" id="inputRaisedBy" placeholder="L3 Raised By *" value="<%= result.RAISED_BY %>" name="RAISED_BY" list="user" style="margin-right: 90px;">
+                    <datalist id="user">
+                        <% users.forEach((users)=>{%>
+                            <option id=<%=users.NAME %>><%= users.NAME %>
+                            </option>
+                            <%})%>
+                    </datalist>
+                </td>
+                <td>
+                    <% if (errors.PRIORITY) { %>
+                        <label for="inputPriority" class="text-danger"><%= errors.PRIORITY.msg %></label>
+                        <% } else { %>
+                            <label for="inputPriority">Priority</label>
+                        <% } %>
+                    <select autofocus type="text" class="form-control shadow-none phText" id="inputPriority" name="PRIORITY" style="margin-right: 70px;">
+                        <option value="<%= result.PRIORITY %>" selected><%= result.PRIO %></option>
+                        <option value="-" disabled>---------</option>
+                        <option value="1">Critical</option>
+                        <option value="2">High</option>
+                        <option value="3">Medium</option>
+                        <option value="4">Low</option>
+                    </select>
+                </td>
+                <td>
+                    <% if (errors.OPEN_DATE) { %>
+                        <label for="inputOpen" class="text-danger"><%= errors.OPEN_DATE.msg %></label>
+                        <% } else { %>
+                            <label for="inputOpen">Issue raised on</label>
+                        <% } %>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputOpen" placeholder="L3 Raised on (DD-MON-YYYY)*" name="OPEN_DATE" value="<%= result.CREATED_ON %>" style="margin-right: 140px;">
+                </td>
+                <td>
+                    <label for="inputITSM">ITSM No</label>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputITSM" value="<%= result.ITSM_L3 %>" name="ITSM_NO">
+                </td>
+                <td>
+                    <label for="inputJira">JIRA ID</label>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputJira" value="<%= result.JIRA_ID %>" name="JIRA_ID">
+                </td>
+            </tr>
+        </table>  
+        <label for="inputMail">Mail subject</label>
+        <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputMail" name="MAIL" value="<%= result.MAIL_SUB %>">  
+        <label for="inputComments">Comments</label>
+        <textarea autofocus type="text" class="form-control shadow-none phText" id="inputComments" name="COMMENTS" style="height: 140px;"><%= result.COMMENTS %></textarea>
+        <table class="table table-no-border" style="margin-bottom: 0px;">
+            <tr>
+                <td>
+                    <label for="inputOwner">Ownership</label>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputOwner" value="<%= result.OWNERSHIP %>" name="OWNER">
+                </td>
+                <td>
+                    <% if (errors.STATUS) { %>
+                        <label for="inputStatus" class="text-danger"><%= errors.STATUS.msg %></label>
+                        <% } else { %>
+                            <label for="inputStatus">Status</label>
+                        <% } %>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputStatus" value="<%= result.STATUS %>" name="STATUS">
+                </td>
+                <td>
+                    <label for="inputClosed">Closed on</label>
+                    <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputClosed" placeholder="(DD-MON-YYYY)" value="<%= result.CLOSED_ON %>" name="CLOSED_ON">
+                </td>
+            </tr>
+            
+        </table>
+        <label for="inputRemarks">Remark</label>
+        <input autofocus type="text" class="form-control shadow-none mb-2 phText" id="inputRemarks" value="<%= result.REMARKS %>" name="REMARK" style="width: 450px;">
+        <br>
+        <button type="submit" class="btn btn-danger btn-sm">UPDATE</button>
+    </form>
+</div>
+
+<script>
+    let toggle = () => {
+        let label = document.getElementById("action-msg-label");
+        label.setAttribute("hidden", "hidden");
+    }
+</script>
+
+<%- include('footer') %>

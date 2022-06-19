@@ -154,6 +154,7 @@ const getTaskCount = (callback) => {
     });
 }
 
+// this function will handle all the data fetch operations for export options
 const exportModel = (action, callback) => {
     if (action === 'open') {
         const sql = "SELECT ID AS ISSUE_ID,TITLE,DESCRIPTION,ASSIGNED_TO,STATUS,CASE PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIORITY,TAGS,CREATED_ON,MODIFIED_ON,COMMENTS,IS_HIDE FROM TRACKER_DATA WHERE STATUS <> 'Closed' ORDER BY ID DESC";
@@ -176,7 +177,88 @@ const exportModel = (action, callback) => {
         });
         return;
     }
-}
+
+    else if (action === 'l3issues') {
+        const sql = "SELECT L.ISSUE_NAME 'L3_ISSUE', L.ITSM_L3, L.JIRA_ID, L.RAISED_BY, L.CREATED_ON 'RAISED_ON', CASE L.PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIORITY, L.MAIL_SUB 'MAIL_SUBJECT', L.COMMENTS, L.OWNERSHIP, L.STATUS, L.CLOSED_ON, L.REMARKS 'REMARK' FROM (SELECT * FROM L3_TRACKER ORDER BY PRIORITY ASC, ID ASC) L";
+        db.appDB.all(sql, [], (err, rows) => {
+            callback (rows);
+        });
+        return;
+    }
+};
+
+const getRaisedByUsers = (callback) => {
+    const sql = "SELECT * FROM USERS WHERE NAME NOT LIKE '%-%' ORDER BY NAME";
+
+    db.appDB.all(sql, [], (err, rows) => {
+        if (err) {
+            callback("error at getUsers in models :: ", err.message);
+            return;
+        }
+        callback(rows);
+    });
+};
+
+const getOpenL3issues = (callback) => {
+    const sql = "SELECT CASE L.PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIO, L.* FROM (SELECT * FROM L3_TRACKER ORDER BY PRIORITY ASC, ID ASC) L WHERE UPPER(L.STATUS) NOT LIKE '%CLOSED%'";
+
+    db.appDB.all(sql, [], (err, rows) => {
+        if (err) {
+            callback("error at getL3issues in models :: ", err.message);
+            return;
+        }
+        callback(rows);
+    });
+};
+
+const getClosedL3issues = (callback) => {
+    const sql = "SELECT CASE L.PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIO, L.* FROM (SELECT * FROM L3_TRACKER ORDER BY PRIORITY ASC, ID ASC) L WHERE UPPER(L.STATUS) LIKE '%CLOSED%'";
+
+    db.appDB.all(sql, [], (err, rows) => {
+        if (err) {
+            callback("error at getL3issues in models :: ", err.message);
+            return;
+        }
+        callback(rows);
+    });
+};
+
+const insertL3issue = (args, callback) => {
+    const sql = "INSERT INTO L3_TRACKER (ISSUE_NAME, RAISED_BY, PRIORITY, CREATED_ON, ITSM_L3, JIRA_ID, MAIL_SUB, COMMENTS, OWNERSHIP, STATUS, CLOSED_ON, REMARKS) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)"
+
+    db.appDB.run(sql, [args.L3_name, args.raised_by, args.prio, args.open_dt, args.itsm_no, args.jira_id, args.mail_sub, args.comments, args.owner, args.status, args.close_dt, args.remark], (err, result) => {
+        if (err) {
+            callback("error at insertL3issue in models :: ", err.message);
+            return;
+        }
+        callback(result);
+    });
+};
+
+const getL3byId = (id, callback) => {
+    const sql = "SELECT CASE L.PRIORITY WHEN '1' THEN 'Critical' WHEN '2' THEN 'High' WHEN '3' THEN 'Medium' WHEN '4' THEN 'Low' END AS PRIO, L.* FROM (SELECT * FROM L3_TRACKER) L WHERE L.ID = ?";
+
+    db.appDB.get(sql, [id], (err, result) => {
+        if (err) {
+            callback("error at getL3byId in models :: ", err.message);
+            return;
+        }
+        callback(result);
+    });
+};
+
+const updateL3byId = (args, callback) => {
+    const sql = "UPDATE L3_TRACKER SET ISSUE_NAME = ?, RAISED_BY = ?, PRIORITY = ?, CREATED_ON = ?, ITSM_L3 = ?, JIRA_ID = ?, MAIL_SUB = ?, COMMENTS = ?, OWNERSHIP = ?, STATUS = ?, CLOSED_ON = ?, REMARKS = ? WHERE ID = ?";
+
+    db.appDB.run(sql, [args.L3_name, args.raised_by, args.prio, args.open_dt, args.itsm_no, args.jira_id, args.mail_sub, args.comments, args.owner, args.status, args.close_dt, args.remark, args.id], (err, result) => {
+        if (err) {
+            callback ("error at updateL3byId in models :: ", err);
+            return;
+        }
+        callback('success');
+    });
+};
+
 
 module.exports = {
     getAllData,
@@ -191,5 +273,11 @@ module.exports = {
     getTaskCount,
     updateIs_Hide,
     getHiddenTasks,
-    exportModel
+    exportModel,
+    getRaisedByUsers,
+    getOpenL3issues,
+    getClosedL3issues,
+    insertL3issue,
+    getL3byId,
+    updateL3byId
 }

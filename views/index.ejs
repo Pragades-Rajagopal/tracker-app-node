@@ -1,6 +1,6 @@
 <%- include('header') %>
 
-<h3 style="text-align: center;">homepage</h3>
+<h4 style="text-align: center;">add issue</h4>
 
 <div class="container container-shrink-small">
     
@@ -56,14 +56,14 @@
                     </td>
                 </tr>
             </table>
-            <button type="submit" class="btn btn-primary btn-sm">CREATE TASK</button>
+            <button type="submit" class="btn btn-primary btn-sm">CREATE ISSUE</button>
     </form>
     
 </div>
 
 <div class="container container-shrink">
     <!-- <HR style="margin: 6px 0 0 0;">Task details</HR> -->
-    <h4 style="margin: 6px 0 0 0; text-align: center;">open tasks</h4>
+    <h4 style="margin: 6px 0 0 0; text-align: center;">open issues (<%= result.length %> issues)</h4>
     <input autofocus type="text" class="form-control shadow-none phText searchbox-input" id="searchbox-input" placeholder="Search to filter..." name="_SEARCH"/>
     <% result.forEach((result)=>{%>
         <div class="card" style="margin-bottom: 2px;">

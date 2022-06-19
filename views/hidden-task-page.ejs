@@ -1,7 +1,7 @@
 <%- include('header') %>
 
 <div class="container container-shrink">
-<h4 style="text-align: center;">hidden tasks</h4>
+<h4 style="text-align: center;">hidden issues</h4>
 <% result.forEach((result)=>{%>
     <form action="/prov_ops-tracker-app/issue/closed/unhide/<%= result.ID %>" method="post">
         <div class="card" style="margin-bottom: 4px;">

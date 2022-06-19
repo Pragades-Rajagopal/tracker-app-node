@@ -167,3 +167,12 @@ body {
     padding-top: 2px;
     margin-top: 5px;
 }
+
+.l3-title {
+    text-decoration: none;
+    color: slateblue;
+}
+
+.l3-title:hover {
+    color: black;
+}

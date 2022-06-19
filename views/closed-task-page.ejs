@@ -24,8 +24,8 @@
           </table>  
         <% })%>
         <br>
-      <a href="/prov_ops-tracker-app/issues/closed/hide" class="btn btn-outline-dark btn-sm">Show hidden tasks</a>
-    <h4 style="margin-top: 8px; text-align: center;">closed tasks</h4>
+      <a href="/prov_ops-tracker-app/issues/closed/hide" class="btn btn-outline-dark btn-sm">Show hidden issues</a>
+    <h4 style="margin-top: 8px; text-align: center;">closed issues</h4>
     <% result.forEach((result)=>{%>
         <form action="/prov_ops-tracker-app/issue/<%= result.ID %>/hide" method="post">
             <div class="card" style="margin-bottom: 2px;">

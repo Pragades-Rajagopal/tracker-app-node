@@ -18,6 +18,13 @@ route.get('/prov_ops-tracker-app/exports', controller.getExportPage);
 route.get('/prov_ops-tracker-app/exports/open-issues', controller.exportOpenTasks);
 route.get('/prov_ops-tracker-app/exports/closed-issues', controller.exportClosedTasks);
 route.get('/prov_ops-tracker-app/exports/all', controller.exportAllTasks);
+route.get('/prov_ops-tracker-app/L3_tracker', controller.getL3page);
+route.get('/prov_ops-tracker-app/L3_tracker/add', controller.getAddL3page);
+route.post('/prov_ops-tracker-app/L3_tracker/add', validation.addL3, controller.addL3issue);
+route.get('/prov_ops-tracker-app/L3_tracker/view/:ID', controller.getL3issue);
+route.post('/prov_ops-tracker-app/L3_tracker/view/:ID/update-details', validation.addL3, controller.putL3issue);
+route.get('/prov_ops-tracker-app/L3_tracker/closed', controller.getClosedL3page);
+route.get('/prov_ops-tracker-app/exports/L3-issues', controller.exportL3issues)
 
 module.exports = route;
 
